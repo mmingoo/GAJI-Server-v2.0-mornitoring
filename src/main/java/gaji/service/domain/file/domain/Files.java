@@ -19,7 +19,7 @@ public class Files {
     private String type;
 
     //크기
-    private Integer size;
+    private Integer file_size;
 
     //원본이름
     private String originalName;
@@ -33,7 +33,7 @@ public class Files {
     @Builder
     public Files(String type, Integer size, String originalName, String fileName, String path) {
         this.type = type;
-        this.size = size;
+        this.file_size = size;
         this.originalName = originalName;
         this.fileName = fileName;
         this.path = path;

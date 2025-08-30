@@ -42,7 +42,7 @@ public class TestController {
      * 테스트용 JWT 토큰 발급 API
      * 실제 운영환경에서는 제거해야 함
      */
-    @GetMapping("/test/token")
+    @GetMapping("/token")
     public ResponseEntity<Map<String, String>> generateTestToken(
             @RequestParam(defaultValue = "testUser") String username) {
 
