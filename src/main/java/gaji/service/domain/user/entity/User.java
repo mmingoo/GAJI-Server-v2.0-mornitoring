@@ -6,7 +6,7 @@ import gaji.service.domain.common.entity.BaseEntity;
 import gaji.service.domain.enums.ServiceRole;
 import gaji.service.domain.enums.SocialType;
 import gaji.service.domain.enums.UserActive;
-import gaji.service.domain.post.entity.CommnuityPost;
+import gaji.service.domain.post.entity.CommunityPost;
 import gaji.service.domain.post.entity.CommunityComment;
 import gaji.service.domain.post.entity.PostFile;
 import gaji.service.domain.post.entity.PostLikes;
@@ -67,7 +67,7 @@ public class User extends BaseEntity {
     private List<CommunityComment> commentList;
 
     @OneToMany(mappedBy = "user")
-    private List<CommnuityPost> postList;
+    private List<CommunityPost> postList;
 
 //    @OneToMany(mappedBy = "user")
 //    private List<PostBookmark> postBookmarkList = new ArrayList<>();

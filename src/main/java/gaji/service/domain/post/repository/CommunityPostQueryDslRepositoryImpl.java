@@ -10,7 +10,7 @@ import gaji.service.domain.common.service.CategoryService;
 import gaji.service.domain.enums.PostStatusEnum;
 import gaji.service.domain.enums.PostTypeEnum;
 import gaji.service.domain.enums.SortType;
-import gaji.service.domain.post.entity.CommnuityPost;
+import gaji.service.domain.post.entity.CommunityPost;
 import gaji.service.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +23,7 @@ import java.util.List;
 
 import static gaji.service.domain.common.entity.QSelectCategory.selectCategory;
 import static gaji.service.domain.common.entity.QSelectHashtag.selectHashtag;
-import static gaji.service.domain.post.entity.QCommnuityPost.commnuityPost;
+import static gaji.service.domain.post.entity.QCommunityPost.communityPost;
 import static gaji.service.domain.user.entity.QUser.user;
 
 
@@ -34,7 +34,7 @@ public class CommunityPostQueryDslRepositoryImpl implements CommunityPostQueryDs
     private final CategoryService categoryService;
 
     @Override
-    public Slice<CommnuityPost> findAllFetchJoinWithUser(String keyword,
+    public Slice<CommunityPost> findAllFetchJoinWithUser(String keyword,
                                                 Integer lastPopularityScore,
                                                 Long lastPostId,
                                                 Integer lastLikeCnt,
@@ -46,11 +46,11 @@ public class CommunityPostQueryDslRepositoryImpl implements CommunityPostQueryDs
                                                 Pageable pageable) {
         List<Long> entityIdList = (categoryId != null) ? getEntityIdListByCategoryIdAndPostType(categoryId, postType) : null;
 
-        List<CommnuityPost> postList = jpaQueryFactory.
-                selectFrom(commnuityPost)
-                .leftJoin(commnuityPost.user, user)
+        List<CommunityPost> postList = jpaQueryFactory.
+                selectFrom(communityPost)
+                .leftJoin(communityPost.user, user)
                 .join(selectCategory)
-                .on(joinSelectCategory(commnuityPost.id, commnuityPost.type))
+                .on(joinSelectCategory(communityPost.id, communityPost.type))
 //                .join(selectHashtag) // TODO: 연관관계가 맺어져 있지 않아도 조인 가능, 추후 리팩토링 고려
 //                .on(joinSelectHashtag(commnuityPost.id, commnuityPost.type))
                 .fetchJoin()
@@ -75,9 +75,9 @@ public class CommunityPostQueryDslRepositoryImpl implements CommunityPostQueryDs
     }
 
     @Override
-    public CommnuityPost findByIdFetchJoinWithUser(Long postId) {
-        return jpaQueryFactory.selectFrom(commnuityPost)
-                .leftJoin(commnuityPost.user, user)
+    public CommunityPost findByIdFetchJoinWithUser(Long postId) {
+        return jpaQueryFactory.selectFrom(communityPost)
+                .leftJoin(communityPost.user, user)
                 .where(
                         postIdEq(postId)
                 )
@@ -86,12 +86,12 @@ public class CommunityPostQueryDslRepositoryImpl implements CommunityPostQueryDs
 
     @Override
     public Slice<Tuple> findAllPostsByUser(User user, LocalDateTime cursorDateTime, Pageable pageable, PostTypeEnum type) {
-        List<Tuple> userPosts = jpaQueryFactory.select(commnuityPost.id, commnuityPost.user, commnuityPost.title, commnuityPost.body, commnuityPost.type, commnuityPost.status, commnuityPost.hit, commnuityPost.likeCnt, commnuityPost.createdAt)
-                .from(commnuityPost)
-                .where(commnuityPost.user.eq(user), (postTypeEq(type))
-                        ,(commnuityPost.createdAt.before(cursorDateTime))
+        List<Tuple> userPosts = jpaQueryFactory.select(communityPost.id, communityPost.user, communityPost.title, communityPost.body, communityPost.type, communityPost.status, communityPost.hit, communityPost.likeCnt, communityPost.createdAt)
+                .from(communityPost)
+                .where(communityPost.user.eq(user), (postTypeEq(type))
+                        ,(communityPost.createdAt.before(cursorDateTime))
                 )
-                .orderBy(commnuityPost.createdAt.desc())
+                .orderBy(communityPost.createdAt.desc())
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
 
@@ -99,39 +99,39 @@ public class CommunityPostQueryDslRepositoryImpl implements CommunityPostQueryDs
     }
 
     private BooleanExpression postIdEq(Long postId) {
-        return commnuityPost.id.eq(postId);
+        return communityPost.id.eq(postId);
     }
 
     private BooleanExpression postTypeEq(PostTypeEnum postTypeCond) {
-        return (postTypeCond != null) ? commnuityPost.type.eq(postTypeCond) : null;
+        return (postTypeCond != null) ? communityPost.type.eq(postTypeCond) : null;
     }
 
     private BooleanExpression postStatusEq(PostStatusEnum postStatusCond) {
-        return (postStatusCond != null) ? commnuityPost.status.eq(postStatusCond) : null;
+        return (postStatusCond != null) ? communityPost.status.eq(postStatusCond) : null;
     }
 
     private BooleanExpression ltPopularityScore(Integer popularityScore) {
-        return (popularityScore != null) ? commnuityPost.popularityScore.lt(popularityScore) : null;
+        return (popularityScore != null) ? communityPost.popularityScore.lt(popularityScore) : null;
     }
 
     private BooleanExpression ltPostId(Long lastPostId) {
-        return (lastPostId != null) ? commnuityPost.id.lt(lastPostId) : null;
+        return (lastPostId != null) ? communityPost.id.lt(lastPostId) : null;
     }
 
     private BooleanExpression ltLikeCnt(Integer lastLikeCnt) {
-        return (lastLikeCnt != null) ? commnuityPost.likeCnt.lt(lastLikeCnt) : null;
+        return (lastLikeCnt != null) ? communityPost.likeCnt.lt(lastLikeCnt) : null;
     }
 
     private BooleanExpression postIdIn(List<Long> postIdList) {
-        return (postIdList != null) ? commnuityPost.id.in(postIdList) : null;
+        return (postIdList != null) ? communityPost.id.in(postIdList) : null;
     }
 
     private BooleanExpression ltHit(Integer lastHit) {
-        return (lastHit != null) ? commnuityPost.hit.lt(lastHit) : null;
+        return (lastHit != null) ? communityPost.hit.lt(lastHit) : null;
     }
 
     private BooleanExpression searchByKeyword(String keyword) {
-        return (keyword != null) ? commnuityPost.title.containsIgnoreCase(keyword).or(commnuityPost.body.containsIgnoreCase(keyword)) : null;
+        return (keyword != null) ? communityPost.title.containsIgnoreCase(keyword).or(communityPost.body.containsIgnoreCase(keyword)) : null;
     }
 
     private BooleanExpression joinSelectHashtag(NumberPath<Long> entityId, EnumPath<PostTypeEnum> postType) {
@@ -157,10 +157,10 @@ public class CommunityPostQueryDslRepositoryImpl implements CommunityPostQueryDs
 
     private OrderSpecifier orderBySortType(SortType sortTypeCond) {
         return switch (sortTypeCond) {
-            case HOT -> commnuityPost.popularityScore.desc(); // HOT: 인기점수 내림차순
-            case LIKE -> commnuityPost.likeCnt.desc(); // LIKE: 좋아요 내림차순
-            case HIT -> commnuityPost.hit.desc(); // HIT: 조회수 내림차순
-            default -> commnuityPost.createdAt.desc(); // null or RECENT: 최신순(생성일자 내림차순)
+            case HOT -> communityPost.popularityScore.desc(); // HOT: 인기점수 내림차순
+            case LIKE -> communityPost.likeCnt.desc(); // LIKE: 좋아요 내림차순
+            case HIT -> communityPost.hit.desc(); // HIT: 조회수 내림차순
+            default -> communityPost.createdAt.desc(); // null or RECENT: 최신순(생성일자 내림차순)
         };
     }
 }

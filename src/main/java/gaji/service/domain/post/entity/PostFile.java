@@ -21,7 +21,7 @@ public class PostFile {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private CommnuityPost post;
+    private CommunityPost post;
 
     private String path;
 }

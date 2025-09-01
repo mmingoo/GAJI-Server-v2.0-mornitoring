@@ -10,7 +10,7 @@ import gaji.service.domain.enums.PostTypeEnum;
 import gaji.service.domain.enums.SortType;
 import gaji.service.domain.post.code.CommunityPostErrorStatus;
 import gaji.service.domain.post.converter.CommunityPostConverter;
-import gaji.service.domain.post.entity.CommnuityPost;
+import gaji.service.domain.post.entity.CommunityPost;
 import gaji.service.domain.post.repository.CommunityPostBookmarkRepository;
 import gaji.service.domain.post.repository.CommunityPostJpaRepository;
 import gaji.service.domain.post.repository.CommunityPostLikesRepository;
@@ -61,7 +61,7 @@ public class CommunityPostQueryServiceImpl implements CommunityPostQueryService 
             categoryId=categoryService.findAllByCategory(CategoryEnum.fromValue(category)).get(0).getId();
         }
 
-        Slice<CommnuityPost> postSlice = communityPostJpaRepository.findAllFetchJoinWithUser(keyword,
+        Slice<CommunityPost> postSlice = communityPostJpaRepository.findAllFetchJoinWithUser(keyword,
                 lastPopularityScore,
                 lastPostId,
                 lastLikeCnt,
@@ -74,7 +74,7 @@ public class CommunityPostQueryServiceImpl implements CommunityPostQueryService 
 
         List<CommunityPostResponseDTO.PostPreviewDTO> postPreviewDTOList = new ArrayList<>();
 
-        for (CommnuityPost post : postSlice.getContent()) {
+        for (CommunityPost post : postSlice.getContent()) {
             List<SelectHashtag> selectHashtagList = hashtagService.findAllFetchJoinWithHashtagByEntityIdAndPostType(post.getId(), post.getType());
             postPreviewDTOList.add(CommunityPostConverter.toPostPreviewDTO(post, selectHashtagList));
         }
@@ -88,7 +88,7 @@ public class CommunityPostQueryServiceImpl implements CommunityPostQueryService 
     @Override
     @Transactional
     public CommunityPostResponseDTO.PostDetailDTO getPostDetail(Long userId, Long postId) {
-        CommnuityPost findPost = communityPostJpaRepository.findByIdFetchJoinWithUser(postId);
+        CommunityPost findPost = communityPostJpaRepository.findByIdFetchJoinWithUser(postId);
         if (findPost == null) {
             throw new RestApiException(CommunityPostErrorStatus._POST_NOT_FOUND);
         }
@@ -107,32 +107,32 @@ public class CommunityPostQueryServiceImpl implements CommunityPostQueryService 
     }
 
     @Override
-    public CommnuityPost findPostByPostId(Long postId) {
+    public CommunityPost findPostByPostId(Long postId) {
         return communityPostJpaRepository.findById(postId)
                 .orElseThrow(() -> new RestApiException(CommunityPostErrorStatus._POST_NOT_FOUND));
     }
 
     @Override
-    public boolean isPostWriter(Long userId, CommnuityPost post) {
+    public boolean isPostWriter(Long userId, CommunityPost post) {
         return post.getUser().getId().equals(userId);
     }
 
     @Override
-    public void validPostWriter(Long userId, CommnuityPost post) {
+    public void validPostWriter(Long userId, CommunityPost post) {
         if (!post.getUser().getId().equals(userId)) {
             throw new RestApiException(CommunityPostErrorStatus._NOT_AUTHORIZED);
         }
     }
 
     @Override
-    public void validExistsPostLikes(Long userId, CommnuityPost post) {
+    public void validExistsPostLikes(Long userId, CommunityPost post) {
         if (postLikesRepository.existsByUserIdAndPost(userId, post)) {
             throw new RestApiException(CommunityPostErrorStatus._ALREADY_EXIST_POST_LIKES);
         }
     }
 
     @Override
-    public void validExistsPostBookmark(Long userId, CommnuityPost post) {
+    public void validExistsPostBookmark(Long userId, CommunityPost post) {
         if (postBookmarkRepository.existsByUserIdAndPost(userId, post)) {
             throw new RestApiException(CommunityPostErrorStatus._ALREADY_EXIST_POST_BOOKMARK);
         }
@@ -142,7 +142,7 @@ public class CommunityPostQueryServiceImpl implements CommunityPostQueryService 
     @Transactional
     public String putPostStatus(Long userId, Long postId) {
         // 게시글 조회
-        CommnuityPost post = findPostByPostId(postId);
+        CommunityPost post = findPostByPostId(postId);
 
         // 요청한 사용자와 게시글 작성자 비교
         if (!post.getUser().getId().equals(userId)) {
@@ -158,7 +158,7 @@ public class CommunityPostQueryServiceImpl implements CommunityPostQueryService 
         return post.getStatus().getValue();
     }
 
-    private PostStatusEnum determineNextStatus(CommnuityPost post) {
+    private PostStatusEnum determineNextStatus(CommunityPost post) {
         PostTypeEnum type = post.getType();
         PostStatusEnum currentStatus = post.getStatus();
 

@@ -13,7 +13,7 @@ import gaji.service.domain.enums.PostTypeEnum;
 import gaji.service.domain.post.code.CommunityPostErrorStatus;
 import gaji.service.domain.post.converter.CommunityCommentConverter;
 import gaji.service.domain.post.converter.CommunityPostConverter;
-import gaji.service.domain.post.entity.CommnuityPost;
+import gaji.service.domain.post.entity.CommunityPost;
 import gaji.service.domain.post.entity.CommunityComment;
 import gaji.service.domain.post.entity.PostBookmark;
 import gaji.service.domain.post.entity.PostLikes;
@@ -50,8 +50,8 @@ public class CommunityPostCommandServiceImpl implements CommunityPostCommandServ
     @Override
     public CommunityPostResponseDTO.PostIdResponseDTO uploadPost(Long userId, CommunityPostRequestDTO.UploadPostRequestDTO request) {
         User findUser = userQueryService.findUserById(userId);
-        CommnuityPost post = CommunityPostConverter.toPost(request, findUser);
-        CommnuityPost newPost = communityPostJpaRepository.save(post);
+        CommunityPost post = CommunityPostConverter.toPost(request, findUser);
+        CommunityPost newPost = communityPostJpaRepository.save(post);
 
         // 해시태그 저장
         // TODO: 해시태그 벌크성 insert 적용
@@ -79,7 +79,7 @@ public class CommunityPostCommandServiceImpl implements CommunityPostCommandServ
     @Override
     public CommunityPostResponseDTO.PostIdResponseDTO editPost(Long userId, Long postId, CommunityPostRequestDTO.EditPostRequestDTO request) {
         // 조회
-        CommnuityPost findPost = communityPostQueryService.findPostByPostId(postId);
+        CommunityPost findPost = communityPostQueryService.findPostByPostId(postId);
 
         // 작성자 검증
         communityPostQueryService.validPostWriter(userId, findPost);
@@ -90,7 +90,7 @@ public class CommunityPostCommandServiceImpl implements CommunityPostCommandServ
     @Override
     public CommunityPostCommentResponseDTO.WriteCommentResponseDTO writeCommentOnCommunityPost(Long userId, Long postId, Long parentCommentId, CommunityPostRequestDTO.WriteCommentRequestDTO request) {
         User findUser = userQueryService.findUserById(userId);
-        CommnuityPost findPost = communityPostQueryService.findPostByPostId(postId);
+        CommunityPost findPost = communityPostQueryService.findPostByPostId(postId);
 
         // 저장
         CommunityComment newComment = communityCommentService.saveNewComment(
@@ -119,7 +119,7 @@ public class CommunityPostCommandServiceImpl implements CommunityPostCommandServ
     // TODO: 게시글 파일도 함께 삭제
     @Override
     public void hardDeleteCommunityPost(Long userId, Long postId) {
-        CommnuityPost findPost = communityPostQueryService.findPostByPostId(postId);
+        CommunityPost findPost = communityPostQueryService.findPostByPostId(postId);
 
         // 검증
         communityPostQueryService.validPostWriter(userId, findPost);
@@ -132,7 +132,7 @@ public class CommunityPostCommandServiceImpl implements CommunityPostCommandServ
     @Override
     public CommunityPostResponseDTO.PostBookmarkIdDTO bookmarkCommunityPost(Long userId, Long postId) {
         User findUser = userQueryService.findUserById(userId);
-        CommnuityPost findPost = communityPostQueryService.findPostByPostId(postId);
+        CommunityPost findPost = communityPostQueryService.findPostByPostId(postId);
 
         // 검증
         communityPostQueryService.validExistsPostBookmark(userId, findPost);
@@ -148,7 +148,7 @@ public class CommunityPostCommandServiceImpl implements CommunityPostCommandServ
     @Override
     public void cancelbookmarkCommunityPost(Long userId, Long postId) {
         User findUser = userQueryService.findUserById(userId);
-        CommnuityPost findPost = communityPostQueryService.findPostByPostId(postId);
+        CommunityPost findPost = communityPostQueryService.findPostByPostId(postId);
 
         // 삭제
         postBookmarkRepository.deleteByUserAndPost(findUser, findPost);
@@ -164,7 +164,7 @@ public class CommunityPostCommandServiceImpl implements CommunityPostCommandServ
     @Override
     public CommunityPostResponseDTO.PostLikesIdDTO likeCommunityPost(Long userId, Long postId) {
         User findUser = userQueryService.findUserById(userId);
-        CommnuityPost findPost = communityPostQueryService.findPostByPostId(postId);
+        CommunityPost findPost = communityPostQueryService.findPostByPostId(postId);
 
         // 검증
         communityPostQueryService.validExistsPostLikes(userId, findPost);
@@ -181,7 +181,7 @@ public class CommunityPostCommandServiceImpl implements CommunityPostCommandServ
     @Override
     public void cancelLikeCommunityPost(Long userId, Long postId) {
         User findUser = userQueryService.findUserById(userId);
-        CommnuityPost findPost = communityPostQueryService.findPostByPostId(postId);
+        CommunityPost findPost = communityPostQueryService.findPostByPostId(postId);
 
         // 삭제
         postLikesRepository.deleteByUserAndPost(findUser, findPost);

@@ -2,7 +2,7 @@ package gaji.service.domain.user.converter;
 
 import com.querydsl.core.Tuple;
 import gaji.service.domain.enums.PostTypeEnum;
-import gaji.service.domain.post.entity.QCommnuityPost;
+import gaji.service.domain.post.entity.QCommunityPost;
 import gaji.service.domain.room.entity.QRoom;
 import gaji.service.domain.user.entity.User;
 import gaji.service.domain.user.web.dto.UserResponseDTO;
@@ -50,17 +50,17 @@ public class UserConverter {
 
     public static UserResponseDTO.GetPostDTO toGetPostDTO(Tuple tuple) {
         return UserResponseDTO.GetPostDTO.builder()
-                .postId(tuple.get(QCommnuityPost.commnuityPost.id))
-                .title(tuple.get(QCommnuityPost.commnuityPost.title))
-                .body(tuple.get(QCommnuityPost.commnuityPost.body))
-                .type(tuple.get(QCommnuityPost.commnuityPost.type))
-                .status(tuple.get(QCommnuityPost.commnuityPost.status))
-                .userId(tuple.get(QCommnuityPost.commnuityPost.user.id))
-                .nickname(tuple.get(QCommnuityPost.commnuityPost.user.nickname))
-                .profileImagePth(tuple.get(QCommnuityPost.commnuityPost.user.profileImagePth))
-                .createdAt(DateConverter.convertToRelativeTimeFormat(tuple.get(QCommnuityPost.commnuityPost.createdAt)))
-                .viewCnt(tuple.get(QCommnuityPost.commnuityPost.hit))
-                .likeCnt(tuple.get(QCommnuityPost.commnuityPost.likeCnt))
+                .postId(tuple.get(QCommunityPost.communityPost.id))
+                .title(tuple.get(QCommunityPost.communityPost.title))
+                .body(tuple.get(QCommunityPost.communityPost.body))
+                .type(tuple.get(QCommunityPost.communityPost.type))
+                .status(tuple.get(QCommunityPost.communityPost.status))
+                .userId(tuple.get(QCommunityPost.communityPost.user.id))
+                .nickname(tuple.get(QCommunityPost.communityPost.user.nickname))
+                .profileImagePth(tuple.get(QCommunityPost.communityPost.user.profileImagePth))
+                .createdAt(DateConverter.convertToRelativeTimeFormat(tuple.get(QCommunityPost.communityPost.createdAt)))
+                .viewCnt(tuple.get(QCommunityPost.communityPost.hit))
+                .likeCnt(tuple.get(QCommunityPost.communityPost.likeCnt))
                 .build();
     }
 

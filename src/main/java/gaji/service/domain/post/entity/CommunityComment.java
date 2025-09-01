@@ -27,7 +27,7 @@ public class CommunityComment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private CommnuityPost post;
+    private CommunityPost post;
 
     //자기 참조
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +44,7 @@ public class CommunityComment extends BaseEntity {
     private CommentStatus status;
 
     @Builder
-    public CommunityComment(User user, CommnuityPost post, CommunityComment parent, String body) {
+    public CommunityComment(User user, CommunityPost post, CommunityComment parent, String body) {
         this.user = user;
         this.post = post;
         this.parent = parent;

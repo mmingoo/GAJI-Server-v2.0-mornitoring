@@ -8,7 +8,7 @@ import gaji.service.domain.common.service.HashtagService;
 import gaji.service.domain.common.web.dto.HashtagResponseDTO;
 import gaji.service.domain.enums.PostStatusEnum;
 import gaji.service.domain.enums.PostTypeEnum;
-import gaji.service.domain.post.entity.CommnuityPost;
+import gaji.service.domain.post.entity.CommunityPost;
 import gaji.service.domain.post.entity.CommunityComment;
 import gaji.service.domain.post.entity.PostBookmark;
 import gaji.service.domain.post.entity.PostLikes;
@@ -36,7 +36,7 @@ public class CommunityPostConverter {
                 (type == PostTypeEnum.PROJECT) ? PostStatusEnum.RECRUITING : PostStatusEnum.BLOGING;
     }
 
-    public static CommunityPostResponseDTO.PostIdResponseDTO toPostIdResponseDTO(CommnuityPost post) {
+    public static CommunityPostResponseDTO.PostIdResponseDTO toPostIdResponseDTO(CommunityPost post) {
         return CommunityPostResponseDTO.PostIdResponseDTO
                 .builder()
                 .postId(post.getId())
@@ -57,10 +57,10 @@ public class CommunityPostConverter {
                 .build();
     }
 
-    public static CommnuityPost toPost(CommunityPostRequestDTO.UploadPostRequestDTO request, User user) {
+    public static CommunityPost toPost(CommunityPostRequestDTO.UploadPostRequestDTO request, User user) {
         PostTypeEnum postTypeEnum = PostTypeEnum.from(request.getType());
 
-        return CommnuityPost.builder()
+        return CommunityPost.builder()
                 .user(user)
                 .title(request.getTitle())
                 .body(request.getBody())
@@ -70,7 +70,7 @@ public class CommunityPostConverter {
                 .build();
     }
 
-    public static CommunityComment toComment(CommunityPostRequestDTO.WriteCommentRequestDTO request, User user, CommnuityPost post, CommunityComment parentComment) {
+    public static CommunityComment toComment(CommunityPostRequestDTO.WriteCommentRequestDTO request, User user, CommunityPost post, CommunityComment parentComment) {
         return CommunityComment.builder()
                 .user(user)
                 .post(post)
@@ -79,21 +79,21 @@ public class CommunityPostConverter {
                 .build();
     }
 
-    public static PostBookmark toPostBookmark(User user, CommnuityPost post) {
+    public static PostBookmark toPostBookmark(User user, CommunityPost post) {
         return PostBookmark.builder()
                 .user(user)
                 .post(post)
                 .build();
     }
 
-    public static PostLikes toPostLikes(User user, CommnuityPost post) {
+    public static PostLikes toPostLikes(User user, CommunityPost post) {
         return PostLikes.builder()
                 .user(user)
                 .post(post)
                 .build();
     }
 
-    public static CommunityPostResponseDTO.PostPreviewDTO toPostPreviewDTO(CommnuityPost post, List<SelectHashtag> selectHashtagList) {
+    public static CommunityPostResponseDTO.PostPreviewDTO toPostPreviewDTO(CommunityPost post, List<SelectHashtag> selectHashtagList) {
         List<String> hashtagList = HashtagConverter.toHashtagNameList(selectHashtagList);
 
         return CommunityPostResponseDTO.PostPreviewDTO.builder()
@@ -112,7 +112,7 @@ public class CommunityPostConverter {
                 .build();
     }
 
-    public static CommunityPostResponseDTO.PostPreviewListDTO toPostPreviewListDTO(List<CommnuityPost> postList, boolean hasNext, List<SelectHashtag> selectHashtagList) {
+    public static CommunityPostResponseDTO.PostPreviewListDTO toPostPreviewListDTO(List<CommunityPost> postList, boolean hasNext, List<SelectHashtag> selectHashtagList) {
         List<CommunityPostResponseDTO.PostPreviewDTO> postPreviewDTOList = postList.stream()
                 .map(post -> CommunityPostConverter.toPostPreviewDTO(post, selectHashtagList))
                 .collect(Collectors.toList());
@@ -123,7 +123,7 @@ public class CommunityPostConverter {
                 .build();
     }
 
-    public static CommunityPostResponseDTO.PostDetailDTO toPostDetailDTO(CommnuityPost post, SelectCategory selectCategory, List<SelectHashtag> selectHashtagList,
+    public static CommunityPostResponseDTO.PostDetailDTO toPostDetailDTO(CommunityPost post, SelectCategory selectCategory, List<SelectHashtag> selectHashtagList,
                                                                   boolean isBookmarked, boolean isLiked, boolean isWriter) {
         List<HashtagResponseDTO.HashtagNameAndIdDTO> hashtagNameAndIdDTOList = HashtagConverter.toHashtagNameAndIdDTOList(selectHashtagList);
 

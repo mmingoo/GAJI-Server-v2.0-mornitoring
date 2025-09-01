@@ -55,8 +55,8 @@ public class CommunityPostRestController {
                                                                              @RequestBody @Valid CommunityPostRequestDTO.EditPostRequestDTO request,
                                                                              @Min(value = 1, message = "postId는 1 이상 이어야 합니다.") @PathVariable Long postId) {
         Long userId = tokenProviderService.getUserIdFromToken(authorizationHeader);
-        CommunityPostResponseDTO.PostIdResponseDTO editedCommnuityPost = communityPostCommandService.editPost(userId, postId, request);
-        return BaseResponse.onSuccess(editedCommnuityPost);
+        CommunityPostResponseDTO.PostIdResponseDTO editedCommunityPost = communityPostCommandService.editPost(userId, postId, request);
+        return BaseResponse.onSuccess(editedCommunityPost);
     }
 
     @DeleteMapping("/{postId}")

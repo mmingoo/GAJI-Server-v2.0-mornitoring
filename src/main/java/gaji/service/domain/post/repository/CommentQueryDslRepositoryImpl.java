@@ -3,7 +3,7 @@ package gaji.service.domain.post.repository;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import gaji.service.domain.post.entity.CommnuityPost;
+import gaji.service.domain.post.entity.CommunityPost;
 import gaji.service.domain.post.entity.CommunityComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +23,7 @@ public class CommentQueryDslRepositoryImpl implements CommentQueryDslRepository 
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Slice<CommunityComment> findBySliceAndPostFetchJoinWithUser(Integer lastGroupNum, CommnuityPost post, Pageable pageable) {
+    public Slice<CommunityComment> findBySliceAndPostFetchJoinWithUser(Integer lastGroupNum, CommunityPost post, Pageable pageable) {
         List<CommunityComment> commentList = jpaQueryFactory
                 .select(communityComment)
                 .from(communityComment)

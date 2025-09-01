@@ -3,7 +3,7 @@ package gaji.service.domain.post.service;
 import gaji.service.domain.post.code.CommunityCommentErrorStatus;
 import gaji.service.domain.post.converter.CommunityCommentConverter;
 import gaji.service.domain.post.converter.CommunityPostConverter;
-import gaji.service.domain.post.entity.CommnuityPost;
+import gaji.service.domain.post.entity.CommunityPost;
 import gaji.service.domain.post.entity.CommunityComment;
 import gaji.service.domain.post.repository.CommunityCommentJpaRepository;
 import gaji.service.domain.post.web.dto.CommunityPostCommentResponseDTO;
@@ -35,7 +35,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
 
     @Override
     @Transactional
-    public CommunityComment createCommentByCheckParentCommentIdIsNull(Long parentCommentId, CommunityPostRequestDTO.WriteCommentRequestDTO request, User findUser, CommnuityPost findPost) {
+    public CommunityComment createCommentByCheckParentCommentIdIsNull(Long parentCommentId, CommunityPostRequestDTO.WriteCommentRequestDTO request, User findUser, CommunityPost findPost) {
         if (parentCommentId != null) {
             CommunityComment parentComment = findByCommentId(parentCommentId);
             return CommunityPostConverter.toComment(request, findUser, findPost, parentComment);
@@ -53,7 +53,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     @Override
     public CommunityPostCommentResponseDTO.PostCommentListDTO getCommentListByPost(Long userId, Long postId, Integer lastGroupNum, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        CommnuityPost findPost = communityPostQueryService.findPostByPostId(postId);
+        CommunityPost findPost = communityPostQueryService.findPostByPostId(postId);
         Slice<CommunityComment> commentSlice = communityCommentJpaRepository.findBySliceAndPostFetchJoinWithUser(lastGroupNum, findPost, pageRequest);
 
         List<CommunityPostCommentResponseDTO.PostCommentDTO> postCommentDTOList = new ArrayList<>();

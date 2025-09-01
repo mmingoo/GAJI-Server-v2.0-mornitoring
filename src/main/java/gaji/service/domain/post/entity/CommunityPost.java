@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CommnuityPost extends BaseEntity {
+public class CommunityPost extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "community_post_seq")
     @SequenceGenerator(name = "community_post_seq", sequenceName = "community_post_sequence", allocationSize = 1)
@@ -60,7 +60,7 @@ public class CommnuityPost extends BaseEntity {
     private PostStatusEnum status;
 
     @Builder
-    public CommnuityPost(User user, String title, String body, String thumbnailUrl, PostTypeEnum type, PostStatusEnum status) {
+    public CommunityPost(User user, String title, String body, String thumbnailUrl, PostTypeEnum type, PostStatusEnum status) {
         this.user = user;
         this.title = title;
         this.body = body;

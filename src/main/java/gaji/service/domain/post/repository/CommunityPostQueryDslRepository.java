@@ -4,7 +4,7 @@ import com.querydsl.core.Tuple;
 import gaji.service.domain.enums.PostStatusEnum;
 import gaji.service.domain.enums.PostTypeEnum;
 import gaji.service.domain.enums.SortType;
-import gaji.service.domain.post.entity.CommnuityPost;
+import gaji.service.domain.post.entity.CommunityPost;
 import gaji.service.domain.user.entity.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 public interface CommunityPostQueryDslRepository {
 
-    Slice<CommnuityPost> findAllFetchJoinWithUser(String keyword,
+    Slice<CommunityPost> findAllFetchJoinWithUser(String keyword,
                                          Integer lastPopularityScore,
                                          Long lastPostId,
                                          Integer lastLikeCnt,
@@ -23,7 +23,7 @@ public interface CommunityPostQueryDslRepository {
                                          Long categoryId,
                                          SortType sortType,
                                          Pageable pageable);
-    CommnuityPost findByIdFetchJoinWithUser(Long postId);
+    CommunityPost findByIdFetchJoinWithUser(Long postId);
 
     Slice<Tuple> findAllPostsByUser(User user, LocalDateTime CursorDateTime, Pageable pageable, PostTypeEnum type);
 }
