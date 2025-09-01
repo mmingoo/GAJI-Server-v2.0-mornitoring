@@ -42,6 +42,7 @@ out/
 ### application files ###
 application.yml
 
+
 # 맥에서 생성되는 ds_store
 .DS_Store
 

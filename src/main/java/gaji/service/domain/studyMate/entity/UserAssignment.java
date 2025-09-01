@@ -11,7 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 public class UserAssignment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_assignment_seq")
+    @SequenceGenerator(name = "user_assignment_seq", sequenceName = "user_assignment_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

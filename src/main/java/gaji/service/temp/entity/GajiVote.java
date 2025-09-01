@@ -13,7 +13,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GajiVote {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gaji_vote_seq")
+    @SequenceGenerator(name = "gaji_vote_seq", sequenceName = "gaji_vote_sequence", allocationSize = 1)
     private Long id;
 
     private String email;

@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 public class SearchKeyword {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "search_keyword_seq")
+    @SequenceGenerator(name = "search_keyword_seq", sequenceName = "search_keyword_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

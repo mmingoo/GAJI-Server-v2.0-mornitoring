@@ -13,7 +13,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Curriculum {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "curriculum_seq")
+    @SequenceGenerator(name = "curriculum_seq", sequenceName = "curriculum_sequence", allocationSize = 1)
     private Long id;
     private String name;
     private String title;

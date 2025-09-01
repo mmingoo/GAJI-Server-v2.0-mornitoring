@@ -18,7 +18,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommnuityPost extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "community_post_seq")
+    @SequenceGenerator(name = "community_post_seq", sequenceName = "community_post_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,7 +40,7 @@ public class CommnuityPost extends BaseEntity {
 
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "CLOB")
     private String body; // TODO: 게시글 text 제한 20000자
     private int hit; // TODO: Integer vs int 고민해보기
     private int likeCnt;

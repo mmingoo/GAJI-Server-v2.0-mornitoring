@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Report {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_seq")
+    @SequenceGenerator(name = "report_seq", sequenceName = "report_sequence", allocationSize = 1)
     private Long id;
 
     private Long entityId;

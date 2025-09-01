@@ -5,14 +5,20 @@ spring:
   application:
     name: gaji-service-dev
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/FREE
+    username: SYSTEM
+    password: oracle123
     config:
       import: classpath:application.yml
 
   jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
     show-sql: true
     hibernate:
       ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     properties:
       hibernate:
         format_sql: true

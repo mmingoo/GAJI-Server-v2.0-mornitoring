@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 public class Uuid /* extends BaseEntity -> 추후 추가 시 주석 제거 */  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "uuid_seq")
+    @SequenceGenerator(name = "uuid_seq", sequenceName = "uuid_sequence", allocationSize = 1)
     private Long id;
 
     @Column(unique = true)

@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hashtag extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hashtag_seq")
+    @SequenceGenerator(name = "hashtag_seq", sequenceName = "hashtag_sequence", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, length = 15)

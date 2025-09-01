@@ -15,7 +15,8 @@ import java.util.List;
 @Builder
 public class RoomNotice {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "room_notice_seq")
+    @SequenceGenerator(name = "room_notice_seq", sequenceName = "room_notice_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

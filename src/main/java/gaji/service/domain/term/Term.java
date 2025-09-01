@@ -13,7 +13,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Term {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "term_seq")
+    @SequenceGenerator(name = "term_seq", sequenceName = "term_sequence", allocationSize = 1)
     private Long id;
 
     private String name;

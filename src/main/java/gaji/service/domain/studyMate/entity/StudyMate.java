@@ -19,7 +19,8 @@ import java.util.List;
 public class StudyMate {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "study_mate_seq")
+    @SequenceGenerator(name = "study_mate_seq", sequenceName = "study_mate_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

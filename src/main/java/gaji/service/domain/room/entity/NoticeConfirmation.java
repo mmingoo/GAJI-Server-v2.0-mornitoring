@@ -12,7 +12,8 @@ import lombok.*;
 @Builder
 public class NoticeConfirmation extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notice_confirmation_seq")
+    @SequenceGenerator(name = "notice_confirmation_seq", sequenceName = "notice_confirmation_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

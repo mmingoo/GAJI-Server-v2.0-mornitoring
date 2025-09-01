@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 
 public class RecruitPostLikes {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recruit_post_likes_seq")
+    @SequenceGenerator(name = "recruit_post_likes_seq", sequenceName = "recruit_post_likes_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

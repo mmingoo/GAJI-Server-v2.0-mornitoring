@@ -17,7 +17,8 @@ import java.util.List;
 @Builder
 public class RoomEvent {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "room_event_seq")
+    @SequenceGenerator(name = "room_event_seq", sequenceName = "room_event_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

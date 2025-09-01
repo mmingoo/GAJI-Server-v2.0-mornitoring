@@ -12,7 +12,8 @@ import lombok.*;
 @AllArgsConstructor
 public class WeeklyUserProgress {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "weekly_user_progress_seq")
+    @SequenceGenerator(name = "weekly_user_progress_seq", sequenceName = "weekly_user_progress_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

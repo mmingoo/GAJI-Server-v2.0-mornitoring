@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "Files")
 public class Files {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "files_seq")
+    @SequenceGenerator(name = "files_seq", sequenceName = "files_sequence", allocationSize = 1)
     private Long id;
 
     //확장자

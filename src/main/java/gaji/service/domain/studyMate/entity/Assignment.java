@@ -14,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Assignment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assignment_seq")
+    @SequenceGenerator(name = "assignment_seq", sequenceName = "assignment_sequence", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
